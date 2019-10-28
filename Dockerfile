@@ -4,7 +4,7 @@ MAINTAINER Syhily, syhily@gmail.com
 # Docker Build Arguments, For further upgrade
 ENV ORANGE_PATH="/usr/local/orange"
 ARG LOR_VERSION="0.3.2"
-ENV ORANGE_VERSION="0.6.4"
+ENV ORANGE_VERSION="0.8.0"
 
 ADD docker-entrypoint.sh docker-entrypoint.sh
 
@@ -18,6 +18,7 @@ ADD docker-entrypoint.sh docker-entrypoint.sh
 #  8) Add User
 #  9) Add configuration file & bootstrap file
 # 10) Fix file permission
+COPY Centos-7.repo /etc/yum.repos.d/CentOS-Base.repo 
 RUN \
     chmod 755 docker-entrypoint.sh \
     && mv docker-entrypoint.sh /usr/local/bin \
@@ -37,7 +38,7 @@ RUN \
     && make install \
 
     && cd /tmp \
-    && curl -fSL https://github.com/sumory/orange/archive/v${ORANGE_VERSION}.tar.gz -o orange.tar.gz \
+    && curl -fSL https://github.com/orlabs/orange/archive/v${ORANGE_VERSION}.tar.gz -o orange.tar.gz \
     && tar zxf orange.tar.gz \
     && cd orange-${ORANGE_VERSION} \
     && make install \
